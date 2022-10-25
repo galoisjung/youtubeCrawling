@@ -5,7 +5,7 @@ import sqlite3
 
 import pytube_engine
 
-with open('conf.json') as f:
+with open('conf_DB.json') as f:
     config = json.load(f)
 
 
@@ -17,7 +17,7 @@ class connection_mysql:
         if not drink:
             self.query_1 = '''
             CREATE TABLE IF NOT EXISTS nondrink(
-            id INT PRIMARY KEY,
+            id BIGINT PRIMARY KEY,
             title LONGTEXT NOT NULL,
             author VARCHAR(255) NOT NULL,
             `date` VARCHAR(255) NOT NULL,
@@ -29,7 +29,7 @@ class connection_mysql:
         else:
             self.query_1 = '''
             CREATE TABLE IF NOT EXISTS drink(
-            id INT PRIMARY KEY,
+            id BIGINT PRIMARY KEY,
             title LONGTEXT NOT NULL,
             author VARCHAR(255) NOT NULL,
             `date` VARCHAR(255) NOT NULL,
@@ -37,7 +37,7 @@ class connection_mysql:
             resolution VARCHAR(225) NOT NULL,
             keyword LONGTEXT)
             '''
-            self.query_2 = "INSERT INTO drink(id, title, author, date, length,resolution, keyword) VALUES(%s,%s,%s,%s,%s,%s,%s)"
+            self.query_2 = "INSERT INTO drink(id, title, author, date, length, resolution, keyword) VALUES(%s,%s,%s,%s,%s,%s,%s)"
 
 
 class connection_sqlite:
@@ -47,7 +47,7 @@ class connection_sqlite:
         if not drink:
             self.query_1 = '''
             CREATE TABLE IF NOT EXISTS nondrink(
-            id INT PRIMARY KEY,
+            id BIGINT PRIMARY KEY,
             title LONGTEXT NOT NULL,
             author VARCHAR(255) NOT NULL,
             `date` VARCHAR(255) NOT NULL,
@@ -55,11 +55,11 @@ class connection_sqlite:
             resolution VARCHAR(225) NOT NULL,
             keyword LONGTEXT)
             '''
-            self.query_2 = "INSERT INTO nondrink(id, title, author, date, length, resolution,keyword)  VALUES(?,?,?,?,?,?,?)"
+            self.query_2 = "INSERT INTO nondrink(id, title, author, date, length, resolution , keyword)  VALUES(?,?,?,?,?,?,?)"
         else:
             self.query_1 = '''
                 CREATE TABLE IF NOT EXISTS drink(
-                id INT PRIMARY KEY,
+                    id BIGINT PRIMARY KEY,
                 title LONGTEXT NOT NULL,
                 author VARCHAR(255) NOT NULL,
                 `date` VARCHAR(255) NOT NULL,
