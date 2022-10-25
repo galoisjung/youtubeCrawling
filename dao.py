@@ -40,7 +40,7 @@ class connection_mysql:
 
 class connection_sqlite:
     def __init__(self, drink=False):
-        self.conn = sqlite3.connect("emails.db")
+        self.conn = sqlite3.connect("youtube.db")
 
         if not drink:
             self.query_1 = '''
