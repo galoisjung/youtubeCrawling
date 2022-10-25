@@ -22,9 +22,10 @@ class connection_mysql:
             author VARCHAR(255) NOT NULL,
             `date` VARCHAR(255) NOT NULL,
             `length` int NOT NULL,
+            resolution VARCHAR(225) NOT NULL,
             keyword LONGTEXT)
             '''
-            self.query_2 = "INSERT INTO nondrink(id, title, author, date, length, keyword) VALUES(%s,%s,%s,%s,%s,%s)"
+            self.query_2 = "INSERT INTO nondrink(id, title, author, date, length, resolution,keyword) VALUES(%s,%s,%s,%s,%s,%s,%s)"
         else:
             self.query_1 = '''
             CREATE TABLE IF NOT EXISTS drink(
@@ -33,9 +34,10 @@ class connection_mysql:
             author VARCHAR(255) NOT NULL,
             `date` VARCHAR(255) NOT NULL,
             `length` int NOT NULL,
+            resolution VARCHAR(225) NOT NULL,
             keyword LONGTEXT)
             '''
-            self.query_2 = "INSERT INTO drink(id, title, author, date, length, keyword) VALUES(%s,%s,%s,%s,%s,%s)"
+            self.query_2 = "INSERT INTO drink(id, title, author, date, length,resolution, keyword) VALUES(%s,%s,%s,%s,%s,%s,%s)"
 
 
 class connection_sqlite:
@@ -50,9 +52,10 @@ class connection_sqlite:
             author VARCHAR(255) NOT NULL,
             `date` VARCHAR(255) NOT NULL,
             `length` int NOT NULL,
+            resolution VARCHAR(225) NOT NULL,
             keyword LONGTEXT)
             '''
-            self.query_2 = "INSERT INTO nondrink(id, title, author, date, length, keyword)  VALUES(?,?,?,?,?,?)"
+            self.query_2 = "INSERT INTO nondrink(id, title, author, date, length, resolution,keyword)  VALUES(?,?,?,?,?,?,?)"
         else:
             self.query_1 = '''
                 CREATE TABLE IF NOT EXISTS drink(
@@ -60,10 +63,11 @@ class connection_sqlite:
                 title LONGTEXT NOT NULL,
                 author VARCHAR(255) NOT NULL,
                 `date` VARCHAR(255) NOT NULL,
+                resolution VARCHAR(225) NOT NULL,
                 `length` int NOT NULL,
                 keyword LONGTEXT)
                 '''
-            self.query_2 = "INSERT INTO drink(id, title, author, date, length, keyword) VALUES(?,?,?,?,?,?)"
+            self.query_2 = "INSERT INTO drink(id, title, author, date, length, resolution, keyword) VALUES(?,?,?,?,?,?,?)"
 
 
 def add(youtube, con_instance):
@@ -75,6 +79,7 @@ def add(youtube, con_instance):
     author = youtube.author
     date = str(youtube.publish_date)
     length = youtube.length
+    resolution = youtube.streams.filter().order_by("resolution").last().resolution
     keyword = str(youtube.keywords)
 
     print(id, title, author, date, length, keyword)
@@ -82,7 +87,7 @@ def add(youtube, con_instance):
     curs.execute(con_instance.query_1)
     conn.commit()
 
-    curs.execute(con_instance.query_2, (id, title, author, date, length, keyword,))
+    curs.execute(con_instance.query_2, (id, title, author, date, length, resolution, keyword,))
     conn.commit()
 
 
