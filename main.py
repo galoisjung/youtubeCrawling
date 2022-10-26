@@ -7,17 +7,16 @@ import dao
 
 
 def let_download(page, sql_connection=dao.connection_sqlite):
-    if os.path.isdir("youtube"):
-        already_down = os.listdir("youtube")
-    else:
-        already_down = []
-
     with open("conf.json") as f:
         qr = json.load(f)
 
     sqlcon_instance = sql_connection(True)
 
     for i in range(page + 1):
+        if os.path.isdir("youtube"):
+            already_down = os.listdir("youtube")
+        else:
+            already_down = []
         js = crawling.connection(qr)
         if js['nextPageToken'] != None:
             qr["pageToken"] = js['nextPageToken']
