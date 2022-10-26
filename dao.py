@@ -13,8 +13,6 @@ class connection_mysql:
     def __init__(self, drink=False):
         self.conn = pymysql.connect(host='localhost', user=config["SQL_ID"], passwd=config["SQL_PASSWORD"],
                                     db=config["DB"])
-        self.drink = drink
-
 
         if not drink:
             self.query_1 = '''
@@ -45,7 +43,6 @@ class connection_mysql:
 class connection_sqlite:
     def __init__(self, drink=False):
         self.conn = sqlite3.connect("youtube.db")
-        self.drink = drink
 
         if not drink:
             self.query_1 = '''
